@@ -33,7 +33,7 @@ public abstract class Conta  {
     @Column(nullable = false, length = 20)
     private String numero;
 
-    @Column(nullable = false, precision = 4)
+    @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal saldo;
 
     @Column(nullable = false)
@@ -59,9 +59,17 @@ public abstract class Conta  {
         saldo = saldo.add(valor);
     }
 
-    private static void validarValorMaiorQueZero(BigDecimal valor) {
+    protected static void validarValorMaiorQueZero(BigDecimal valor) {
         if (valor.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("O valor de saque deve ser positivo");
         }
+    }
+
+    public void transferir(BigDecimal valor, Conta contaDestino){
+        if (this.id.equals(contaDestino.getId())){
+            throw new IllegalArgumentException("Não é possível transferir para a mesma conta");
+        }
+        this.sacar(valor);
+        contaDestino.depositar(valor);
     }
 }
