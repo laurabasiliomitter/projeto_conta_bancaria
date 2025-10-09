@@ -2,12 +2,23 @@ package com.senai.projeto_conta_bancaria.application.dto;
 
 import com.senai.projeto_conta_bancaria.domain.entity.Cliente;
 import com.senai.projeto_conta_bancaria.domain.entity.Conta;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 
 public record ClienteRegistroDTO(
+        @NotNull(message = "O nome é obrigatório.")
+        @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres.")
         String nome,
+
+        @NotNull(message = "O CPF é obrigatório.")
         String cpf,
+
+        @Valid
+        @NotNull(message = "A conta é obrigatória.")
         ContaResumoDTO contaDTO
 ) {
     public Cliente toEntity() {

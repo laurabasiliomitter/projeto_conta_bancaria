@@ -1,13 +1,22 @@
 package com.senai.projeto_conta_bancaria.application.dto;
 
 import com.senai.projeto_conta_bancaria.domain.entity.Cliente;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
 public record ClienteAtualizadoDTO(
+        @NotNull(message = "O ID não pode ser nulo.")
         String id,
+        @NotNull(message = "O nome é obrigatório.")
+        @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres.")
         String nome,
+        @NotNull(message = "O CPF é obrigatório.")
         String cpf,
+        @NotNull(message = "A lista de contas não pode ser nula.")
+        @Size(min = 1, message = "Deve haver pelo menos uma conta associada ao cliente.")
         List<ContaResumoDTO> contas
 ) {
 

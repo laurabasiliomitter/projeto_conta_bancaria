@@ -1,11 +1,9 @@
 package com.senai.projeto_conta_bancaria.application.service;
 
-import com.senai.projeto_conta_bancaria.application.dto.ClienteAtualizadoDTO;
 import com.senai.projeto_conta_bancaria.application.dto.ClienteRegistroDTO;
 import com.senai.projeto_conta_bancaria.application.dto.ClienteResponseDTO;
-import com.senai.projeto_conta_bancaria.application.dto.ContaResumoDTO;
 import com.senai.projeto_conta_bancaria.domain.entity.Cliente;
-import com.senai.projeto_conta_bancaria.domain.exception.ContaDoMesmoTipoExcepition;
+import com.senai.projeto_conta_bancaria.domain.exception.ContaDoMesmoTipoException;
 import com.senai.projeto_conta_bancaria.domain.exception.EntidadeNaoEncontradaException;
 import com.senai.projeto_conta_bancaria.domain.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +29,7 @@ public class ClienteService {
                 c -> c.getClass().equals(novaConta.getClass()) && c.isAtiva()
         );
         if (jaTemTipo)
-            throw new ContaDoMesmoTipoExcepition();
+            throw new ContaDoMesmoTipoException();
 
         cliente.getContas().add(novaConta);
 

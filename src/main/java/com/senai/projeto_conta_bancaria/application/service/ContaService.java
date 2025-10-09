@@ -9,12 +9,11 @@ import com.senai.projeto_conta_bancaria.domain.entity.ContaCorrente;
 import com.senai.projeto_conta_bancaria.domain.entity.ContaPoupanca;
 import com.senai.projeto_conta_bancaria.domain.exception.EntidadeNaoEncontradaException;
 import com.senai.projeto_conta_bancaria.domain.exception.RendimentoInvalidoException;
-import com.senai.projeto_conta_bancaria.domain.exception.TipoDeContaInvalidaExcepition;
+import com.senai.projeto_conta_bancaria.domain.exception.TipoDeContaInvalidaException;
 import com.senai.projeto_conta_bancaria.domain.repository.ContaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class ContaService {
 
         }else {
 
-            throw new TipoDeContaInvalidaExcepition("");
+            throw new TipoDeContaInvalidaException("");
         }
         conta.setSaldo(dto.saldo());
 

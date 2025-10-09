@@ -1,8 +1,8 @@
 package com.senai.projeto_conta_bancaria.domain.exception;
 
-public class ContaDoMesmoTipoExcepition extends RuntimeException {
+public class ContaDoMesmoTipoException extends RuntimeException {
 
-    public ContaDoMesmoTipoExcepition() {
+    public ContaDoMesmoTipoException() {
         super("O Cliente já possui uma conta desse tipo");
     }
 }

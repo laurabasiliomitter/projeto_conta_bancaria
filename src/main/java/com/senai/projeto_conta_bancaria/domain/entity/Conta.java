@@ -1,16 +1,12 @@
 package com.senai.projeto_conta_bancaria.domain.entity;
 
-import com.senai.projeto_conta_bancaria.domain.exception.SaldoInsuficienteExcepition;
-import com.senai.projeto_conta_bancaria.domain.exception.TransferirParaMesmaContaExcepition;
+import com.senai.projeto_conta_bancaria.domain.exception.SaldoInsuficienteException;
+import com.senai.projeto_conta_bancaria.domain.exception.TransferirParaMesmaContaException;
 import com.senai.projeto_conta_bancaria.domain.exception.ValoresNegativosException;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.math.BigDecimal;
 
@@ -52,7 +48,7 @@ public abstract class Conta  {
 
         validarValorMaiorQueZero(valor,"saque");
         if (valor.compareTo(saldo) > 0) {
-            throw new SaldoInsuficienteExcepition("saque");
+            throw new SaldoInsuficienteException("saque");
         }
         saldo = saldo.subtract(valor);
     }
@@ -70,7 +66,7 @@ public abstract class Conta  {
 
     public void transferir(BigDecimal valor, Conta contaDestino){
         if (this.id.equals(contaDestino.getId())){
-            throw new TransferirParaMesmaContaExcepition();
+            throw new TransferirParaMesmaContaException();
         }
         this.sacar(valor);
         contaDestino.depositar(valor);
