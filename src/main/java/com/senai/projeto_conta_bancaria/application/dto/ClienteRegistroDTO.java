@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.ArrayList;
 
@@ -15,6 +16,7 @@ public record ClienteRegistroDTO(
         String nome,
 
         @NotNull(message = "O CPF é obrigatório.")
+        @Pattern(regexp = "\\d{11}", message = "CPF deve conter apenas 11 números")
         String cpf,
 
         @Valid

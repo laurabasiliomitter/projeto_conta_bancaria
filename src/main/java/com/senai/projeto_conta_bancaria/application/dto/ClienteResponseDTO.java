@@ -4,6 +4,7 @@ import com.senai.projeto_conta_bancaria.domain.entity.Cliente;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public record ClienteResponseDTO(
         String nome,
 
         @NotNull(message = "O CPF não pode ser nulo.")
+        @Pattern(regexp = "\\d{11}", message = "CPF deve conter apenas 11 números")
         String cpf,
 
         @NotNull(message = "A lista de contas não pode ser nula.")
