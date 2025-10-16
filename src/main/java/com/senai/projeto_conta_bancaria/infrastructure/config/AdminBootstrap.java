@@ -1,8 +1,7 @@
 package com.senai.projeto_conta_bancaria.infrastructure.config;
 
-import com.senai.modelo_autenticacao_autorizacao.domain.entity.Professor;
-import com.senai.modelo_autenticacao_autorizacao.domain.enums.Role;
-import com.senai.modelo_autenticacao_autorizacao.domain.repository.ProfessorRepository;
+import com.senai.projeto_conta_bancaria.domain.entity.Gerente;
+import com.senai.projeto_conta_bancaria.domain.enums.Role;
 import com.senai.projeto_conta_bancaria.domain.repository.GerenteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

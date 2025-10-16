@@ -1,4 +1,4 @@
-package com.senai.projeto_conta_bancaria.interface_ui.controller.exception;
+package com.senai.projeto_conta_bancaria.interface_ui.exception;
 
 import com.senai.projeto_conta_bancaria.domain.exception.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -6,13 +6,16 @@ import jakarta.validation.ConstraintViolationException;
 import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.naming.AuthenticationException;
 import java.net.URI;
+import java.nio.file.AccessDeniedException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -117,26 +120,6 @@ public class GlobalExceptionHandler {
 
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ProblemDetail badRequest(MethodArgumentNotValidException ex, HttpServletRequest request) {
-        ProblemDetail problem = ProblemDetailUtils.buildProblem(
-                HttpStatus.BAD_REQUEST,
-                "Erro de validação",
-                "Um ou mais campos são inválidos",
-                request.getRequestURI()
-        );
-
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getFieldErrors()
-                .forEach(error -> errors.put(
-                                error.getField(),
-                                error.getDefaultMessage()
-                        )
-                );
-
-        problem.setProperty("errors", errors);
-        return problem;
-    }
 
     @ExceptionHandler(ConversionFailedException.class)
     public ProblemDetail handleConversionFailed(ConversionFailedException ex, HttpServletRequest request) {
@@ -178,4 +161,110 @@ public class GlobalExceptionHandler {
         problem.setProperty("errors", errors);
         return problem;
     }
+
+        private ProblemDetail buildProblem(HttpStatus status, String title, String detail, String path) {
+            ProblemDetail problem = ProblemDetail.forStatus(status);
+            problem.setTitle(title);
+            problem.setDetail(detail);
+            problem.setInstance(URI.create(path));
+            return problem;
+        }
+
+        @ExceptionHandler(MethodArgumentNotValidException.class)
+        public ProblemDetail badRequest(MethodArgumentNotValidException ex, HttpServletRequest request) {
+            ProblemDetail problem = buildProblem(
+                    HttpStatus.BAD_REQUEST,
+                    "Erro de validação",
+                    "Um ou mais campos são inválidos",
+                    request.getRequestURI()
+            );
+
+            Map<String, String> errors = new HashMap<>();
+            ex.getBindingResult().getFieldErrors()
+                    .forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+
+            problem.setProperty("errors", errors);
+            return problem;
+        }
+
+        @ExceptionHandler(ConstraintViolationException.class)
+        public ProblemDetail constraintViolation(ConstraintViolationException ex, HttpServletRequest request) {
+            ProblemDetail problem = buildProblem(
+                    HttpStatus.BAD_REQUEST,
+                    "Erro de validação em parâmetros",
+                    "Um ou mais parâmetros são inválidos",
+                    request.getRequestURI()
+            );
+
+            Map<String, String> errors = new HashMap<>();
+            ex.getConstraintViolations().forEach(violation -> {
+                String campo = violation.getPropertyPath().toString();
+                String mensagem = violation.getMessage();
+                errors.put(campo, mensagem);
+            });
+
+            problem.setProperty("errors", errors);
+            return problem;
+        }
+
+        @ExceptionHandler(AuthenticationException.class)
+        public ProblemDetail handleAuthenticationException(AuthenticationException ex, HttpServletRequest request) {
+            return buildProblem(
+                    HttpStatus.UNAUTHORIZED,
+                    "Não autenticado",
+                    ex.getMessage(),
+                    request.getRequestURI()
+            );
+        }
+
+        @ExceptionHandler(AccessDeniedException.class)
+        public ProblemDetail handleAccessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
+            return buildProblem(
+                    HttpStatus.FORBIDDEN,
+                    "Acesso negado",
+                    ex.getMessage(),
+                    request.getRequestURI()
+            );
+        }
+
+        @ExceptionHandler(BadCredentialsException.class)
+        public ProblemDetail handleBadCredentials(BadCredentialsException ex, HttpServletRequest request) {
+            return buildProblem(
+                    HttpStatus.UNAUTHORIZED,
+                    "Credenciais inválidas",
+                    ex.getMessage(),
+                    request.getRequestURI()
+            );
+        }
+        @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+        public ProblemDetail handleMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpServletRequest request) {
+            return buildProblem(
+                    HttpStatus.METHOD_NOT_ALLOWED,
+                    "Método não permitido",
+                    String.format("O método %s não é suportado para esta rota. Métodos suportados: %s",
+                            ex.getMethod(),
+                            String.join(", ", ex.getSupportedMethods() != null ? ex.getSupportedMethods() : new String[]{})),
+                    request.getRequestURI()
+            );
+        }
+
+        @ExceptionHandler(UsuarioNaoEncontradoException.class)
+        public ProblemDetail handleUsuarioNaoEncontrado(UsuarioNaoEncontradoException ex, HttpServletRequest request) {
+            return buildProblem(
+                    HttpStatus.UNAUTHORIZED,
+                    "Usuário não encontrado",
+                    ex.getMessage(),
+                    request.getRequestURI()
+            );
+        }
+
+        @ExceptionHandler(Exception.class)
+        public ProblemDetail hanlderGenerico(Exception ex, HttpServletRequest request) {
+            return buildProblem(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Erro interno",
+                    "Ocorreu um erro inesperado. Contate o suporte.",
+                    request.getRequestURI()
+            );
+        }
 }

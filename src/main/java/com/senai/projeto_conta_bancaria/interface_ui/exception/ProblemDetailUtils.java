@@ -1,4 +1,4 @@
-package com.senai.projeto_conta_bancaria.interface_ui.controller.exception;
+package com.senai.projeto_conta_bancaria.interface_ui.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
