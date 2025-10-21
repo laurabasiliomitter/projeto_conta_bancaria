@@ -1,7 +1,7 @@
 package com.senai.projeto_conta_bancaria.interface_ui.controller;
 
-import com.senai.modelo_autenticacao_autorizacao.application.dto.AuthDTO;
-import com.senai.modelo_autenticacao_autorizacao.application.service.AuthService;
+import com.senai.projeto_conta_bancaria.application.dto.AuthDTO;
+import com.senai.projeto_conta_bancaria.application.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

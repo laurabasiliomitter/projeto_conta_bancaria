@@ -1,6 +1,6 @@
 package com.senai.projeto_conta_bancaria.domain.entity;
 
-import com.senai.modelo_autenticacao_autorizacao.domain.enums.Role;
+import com.senai.projeto_conta_bancaria.domain.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/professores")
+@RequestMapping("/gerentes")
 @RequiredArgsConstructor
 public class GerenteController {
 
@@ -23,8 +23,8 @@ public class GerenteController {
     }
 
     @PostMapping
-    public ResponseEntity<GerenteDTO> cadastrarProfessor(@RequestBody GerenteDTO dto) {
-        GerenteDTO professorCriado = service.cadastrarGerente(dto);
-        return ResponseEntity.ok(professorCriado);
+    public ResponseEntity<GerenteDTO> cadastrarGerente(@RequestBody GerenteDTO dto) {
+        GerenteDTO gerenteCriado = service.cadastrarGerente(dto);
+        return ResponseEntity.ok(gerenteCriado);
     }
 }
