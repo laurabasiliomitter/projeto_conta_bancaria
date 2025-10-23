@@ -1,6 +1,7 @@
 package com.senai.projeto_conta_bancaria.application.dto;
 
 import com.senai.projeto_conta_bancaria.domain.entity.Cliente;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -9,13 +10,17 @@ import org.hibernate.validator.constraints.br.CPF;
 import java.util.List;
 
 public record ClienteResponseDTO(
+
+        @Schema(description = "ID Cliente", example = "1")
         @NotNull(message = "O ID não pode ser nulo.")
         String id,
 
+        @Schema(description = "nome", example = "Rafael")
         @NotNull(message = "O nome não pode ser nulo.")
         @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres.")
         String nome,
 
+        @Schema(description = "cpf", example = "123.456.789.10")
         @NotNull(message = "O CPF não pode ser nulo.")
         @Pattern(regexp = "\\d{11}", message = "CPF deve conter apenas 11 números")
         String cpf,
