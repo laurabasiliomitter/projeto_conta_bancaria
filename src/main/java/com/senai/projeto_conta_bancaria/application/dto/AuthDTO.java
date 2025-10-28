@@ -18,4 +18,8 @@ public class AuthDTO {
             @Schema(description = "token", example = "1111-1")
             String token
     ) {}
+
+    public record AuthResponse(String accessToken, String refreshToken) {}
+
+
 }

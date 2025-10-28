@@ -12,9 +12,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.*;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Configuration
 @RequiredArgsConstructor
+@RequestMapping("/api/cliente")
 public class SecurityConfig {
     private final UsuarioDetailsService usuarioDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -28,6 +30,9 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.POST, "/gerentes").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/gerentes").hasAnyRole("ADMIN","GERENTE")
+                        .requestMatchers(HttpMethod.DELETE, "/gerentes").hasAnyRole("ADMIN","GERENTE")
+                        .requestMatchers(HttpMethod.POST, "/cliente").hasAnyRole("CLIENTE")
+                        .requestMatchers(HttpMethod.GET, "/cliente").hasAnyRole("CLIENTE")
 
                         .anyRequest().authenticated()
                 )

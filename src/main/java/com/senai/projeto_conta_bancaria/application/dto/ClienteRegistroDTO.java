@@ -22,6 +22,9 @@ public record ClienteRegistroDTO(
         @Pattern(regexp = "\\d{11}", message = "CPF deve conter apenas 11 números")
         String cpf,
 
+        @Schema(description = "senha", example = "******" )
+        @NotNull(message = "A senha é obrigatória.")
+        String senha,
 
         @Valid
         @NotNull(message = "A conta é obrigatória.")
@@ -32,6 +35,7 @@ public record ClienteRegistroDTO(
                 .ativo(true)
                 .nome(this.nome)
                 .cpf(this.cpf)
+                .senha(this.senha)
                 .contas(new ArrayList<Conta>())
                 .build();
     }
