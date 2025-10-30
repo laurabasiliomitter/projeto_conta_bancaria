@@ -4,6 +4,7 @@ import com.senai.projeto_conta_bancaria.domain.exception.SaldoInsuficienteExcept
 import com.senai.projeto_conta_bancaria.domain.exception.TransferirParaMesmaContaException;
 import com.senai.projeto_conta_bancaria.domain.exception.ValoresNegativosException;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -38,11 +39,11 @@ public abstract class Conta  {
     @Column(nullable = false)
     private boolean ativa;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id", foreignKey = @ForeignKey(name = "fk_conta_cliente"))
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "cliente_id", nullable = false, foreignKey = @ForeignKey(name = "fk_conta_cliente"))
     private Cliente cliente;
 
-    public abstract String getTipo() ;
+    public abstract String getTipo();
 
     public void sacar(BigDecimal valor) {
 

@@ -20,6 +20,6 @@ public class AuthDTO {
     ) {}
 
     public record AuthResponse(String accessToken, String refreshToken) {}
-
+    public record UserResponse(String nome, String email, String role) {}
 
 }

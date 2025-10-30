@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,6 +20,7 @@ import java.util.List;
                 @UniqueConstraint( columnNames = "cpf")
         }
 )
+
 public class Cliente extends Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -26,11 +28,12 @@ public class Cliente extends Usuario {
 
     @Column(nullable = false, length = 120)
     private String nome;
+
     @Column(nullable = false, length = 11)
     private String cpf;
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-    private List<Conta> contas;
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Conta> contas = new ArrayList<>();
 
     @Column(nullable = false)
     private Boolean ativo;

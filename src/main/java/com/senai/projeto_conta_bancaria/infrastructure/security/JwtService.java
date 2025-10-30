@@ -1,5 +1,6 @@
 package com.senai.projeto_conta_bancaria.infrastructure.security;
 
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -66,5 +67,6 @@ public class JwtService {
                 .getExpiration();
         return expiration.before(new Date());
     }
+
 
 }
