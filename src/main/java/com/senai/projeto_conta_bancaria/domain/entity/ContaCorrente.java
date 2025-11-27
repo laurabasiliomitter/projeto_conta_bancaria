@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @NoArgsConstructor
+
 public class ContaCorrente extends Conta{
 
     @Column(precision = 19, scale = 2)
