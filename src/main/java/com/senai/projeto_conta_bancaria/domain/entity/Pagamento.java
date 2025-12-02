@@ -2,13 +2,11 @@ package com.senai.projeto_conta_bancaria.domain.entity;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,7 +14,6 @@ import java.time.LocalDateTime;
 @Data
 @SuperBuilder
 @NoArgsConstructor
-@ManyToOne
 
 public class Pagamento extends Conta {
 
@@ -33,5 +30,10 @@ public class Pagamento extends Conta {
     private String status;
 
     private String taxas;
+
+
+    @ManyToOne
+    @JoinColumn(name = "conta_id")
+    private Conta contaAssociadas;
 
 }
