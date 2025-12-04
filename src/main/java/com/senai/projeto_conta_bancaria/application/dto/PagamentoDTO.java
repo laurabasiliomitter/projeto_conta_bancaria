@@ -1,4 +1,4 @@
-package com.senai.projeto_conta_bancaria.application.dto;
+/*package com.senai.projeto_conta_bancaria.application.dto;
 
 import com.senai.projeto_conta_bancaria.domain.entity.Pagamento;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -45,4 +45,4 @@ public class PagamentoDTO (
     }
 
 
-}
+}*/

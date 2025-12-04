@@ -1,4 +1,4 @@
-package com.senai.projeto_conta_bancaria.domain.entity;
+/*package com.senai.projeto_conta_bancaria.domain.entity;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -23,4 +23,4 @@ public class Taxa extends Conta{
     private String percentual;
 
     private String valorFixo;
-}
+}*/

@@ -1,4 +1,4 @@
-package com.senai.projeto_conta_bancaria.application.service;
+/*package com.senai.projeto_conta_bancaria.application.service;
 
 
 import com.senai.projeto_conta_bancaria.domain.repository.PagamentoRepository;
@@ -14,4 +14,4 @@ public class PagamentoService {
     private final PagamentoRepository repository;
 
 
-}
+}*/
